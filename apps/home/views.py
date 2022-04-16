@@ -9,6 +9,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
 from django.shortcuts import render
+from apps.home.models import Meanings
 
 
 @login_required(login_url="/login/")
@@ -19,14 +20,13 @@ def index(request):
     return HttpResponse(html_template.render(context, request))
 
 def new_index(request):
-    if request.method == 'POST':
-        text = request.POST['myTextBox']
-        print(text)
-        uploaded_file = request.FILES['document']
-        print(uploaded_file.name)
-        print(uploaded_file.size)
-    return render(request,'home/new_index.html')
-
+	meanings_list = Meanings.objects.order_by('word')
+	display_dict = {'word_meanings':meanings_list}
+	if request.method == 'POST':
+		uploaded_file = request.FILES['document']
+		print(uploaded_file.name)
+		print(uploaded_file.size)
+	return render(request,'home/new_index.html',context= display_dict)
 
 @login_required(login_url="/login/")
 def pages(request):

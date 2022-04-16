@@ -3,17 +3,103 @@
 {% block title %} Dashboard {% endblock title %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<style>
+	[data-tooltip] {
+    display: inline-block;
+    position: relative;
+    cursor: help;
+    padding: 7px;
+}
+
+[data-tooltip]:before {
+    content: attr(data-tooltip);
+    display: none;
+    position: absolute;
+    background: #000;
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 16px;
+    line-height: 1.4;
+    min-width: 100px;
+    text-align: center;
+    border-radius: 6px;
+}
+
+/* Dynamic horizontal centering */
+[data-tooltip-position="top"]:before,
+[data-tooltip-position="bottom"]:before {
+    left: 50%;
+    -ms-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+/* Dynamic vertical centering */
+[data-tooltip-position="right"]:before,
+[data-tooltip-position="left"]:before {
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+[data-tooltip-position="top"]:before {
+    bottom: 100%;
+    margin-bottom: 6px;
+}
+
+[data-tooltip]:after {
+    content: '';
+    display: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+}
+
+[data-tooltip-position="top"]:after,
+[data-tooltip-position="bottom"]:after {
+    left: 50%;
+    margin-left: -6px;
+}
+/* Dynamic vertical centering for the tooltip */
+[data-tooltip-position="right"]:after,
+[data-tooltip-position="left"]:after {
+    top: 50%;
+    margin-top: -6px;
+}
+[data-tooltip-position="top"]:after {
+    bottom: 100%;
+    border-width: 8px 8px 0;
+    border-top-color: #000;
+}
+
+/* Show the tooltip when hovering */
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+    display: block;
+    z-index: 50;
+}
+</style>
+{% endblock stylesheets %}
 
 {% block content %}
-<form method="POST" enctype="multipart/form-data">
-	{% csrf_token %}
-		<textarea name="myTextBox" cols="50" rows="5" placeholder="Enter some text">
-		</textarea>
-		<br>	
-		<br>		
-	<input type="file" name="document">
-	<button type="submit">Upload File</button>
-</form>
+	<div class="box">
+		<form method="GET" enctype="multipart/form-data">
+			{% csrf_token %}
+				<textarea name="myTextBox" cols="50" rows="5" placeholder="Enter some text">
+				</textarea>
+	</div>
+	<div class = 'meanings'>
+		{% if word_meanings %}
+		{% for words in word_meanings%}
+		<span data-tooltip="{{ words.meaning }}" data-tooltip-position="top" style="margin-top: 60px;">{{ words.word }}</span>
+		<!-- <dfn title = ''> </dfn> -->
+		{% endfor%}
+		{% endif %}
+	</div>
 
 {% endblock content %}
