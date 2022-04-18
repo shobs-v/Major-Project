@@ -1,19 +1,181 @@
-{% extends 'layouts/base.html' %}
 
-{% block title %} Dashboard {% endblock title %}
+<!DOCTYPE html>
+<html>
+	<head>
 
-<!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 
-{% block content %}
-<form method="POST" enctype="multipart/form-data">
-	{% csrf_token %}
-		<textarea name="myTextBox" cols="50" rows="5" placeholder="Enter some text">
-		</textarea>
-		<br>	
-		<br>		
-	<input type="file" name="document">
-	<button type="submit">Upload File</button>
-</form>
+	<style> 
+		textarea {
+		width: 94%;
+		height: 150px;
+		padding: 12px 20px;
+		box-sizing: border-box;
+		border: 2px solid #1261A0;
+		border-radius: 4px;
+		background-color: #f8f8f8;
+		font-size: 16px;
+		margin-left:3%;
+		margin-right:3%;
+		margin-top:1%;
+		resize:vertical;
+		overflow-y:scroll;
+		
+		}
 
-{% endblock content %}
+		h2{
+			margin-top:1.5%;
+			text-align:center;
+			font-family: 'Secular One', sans-serif;
+		}
+
+		h4,h5{
+			margin-left:3%;
+			font-family: 'Secular One', sans-serif;
+		}
+
+		p{
+			font-family: 'Secular One', sans-serif;
+			margin-left:3%;
+		}
+
+
+		.submitButton
+		{
+			height: 60px;
+			width: 12%;
+			margin-left: 45.7%;
+			background-color:#baf6ed;
+			border: none;
+			border-radius:20px;
+			font-family: 'Secular One', sans-serif;
+		}
+
+		.wrapper {
+			height: 10vh;
+			/*This part is important for centering*/
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+	.typing-demo {
+			width: 45ch;
+			animation: typing 2.8s steps(30), blink .5s step-end infinite alternate;
+			white-space: nowrap;
+			overflow: hidden;
+			border-right: 3px solid;
+			font-family: 'Secular One', sans-serif;
+			font-size: 1.5em;
+		}
+
+	@keyframes typing {
+			from {
+				width: 0
+			}
+		}
+		
+	@keyframes blink {
+		50% {
+			border-color: transparent
+		}
+	}	
+
+	</style>
+
+	</head>
+
+
+
+<body style="overflow-x: hidden;">
+
+	<form method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+
+		<nav class="navbar navbar-light" style="background-color:#baf6ed">
+			<a class="navbar-brand" href="#" style="margin-left:1.5%;font-family: 'Lobster', cursive;font-size:2em">
+				{% load static %} <img src="{% static "assets/img/logo.png" %}" width="55" height="45" />
+				MediText
+			</a>
+			<a class="navbar-brand" style="margin-left:60%;font-family: 'Secular One', sans-serif;"href="#">About MediText</a>
+			<a class="navbar-brand" style="font-family: 'Secular One', sans-serif;" href="#">Who can Use</a>
+		</nav>
+
+
+		<div class="wrapper">
+    		<div class="typing-demo">Summarize and Understand medical text in just a click!</div>
+		</div>
+
+
+		<h6 style="text-align:center;margin-top:0.5%;font-family: 'Secular One', sans-serif;"> Meditext summarizes medical articles and simplifies medical jargons into their meanings for you</h6>
+
+		<p style="margin-top:1%;"> Enter the text below: </p>
+
+		<textarea name="inputTextBox" placeholder="Enter text to summarize"></textarea> 
+		<br>
+
+		<h5 style="text-align:center;margin-top:1%"> OR </h5>
+		<br>
+
+		<p style="display:inline-block"> Provide Pubmed Url: </p>
+			<input style="margin-left:1%;width:82%;height:45px;border: 2px solid #1261A0;border-radius: 4px;" name="url" placeholder="Enter the url">
+
+		<h5 style="text-align:center;margin-top:1.5%"> OR </h5>
+		<br>
+
+		<p style="display:inline-block"> Upload a file: </p>
+			<input style="margin-left:1%;" type="file" name="document"> 
+		<br>
+		<br>
+		<button type="submit" class="submitButton">Summarize Now</button>
+
+		<br><br>
+	    <p> Generated Summary: </p>
+		<textarea readonly id="outputTextBox" name="outputTextBox" placeholder="Your summary">{{output}}</textarea>
+
+	</form>
+
+		<input type="button" id="downloadButton" class="submitButton meanings" style="margin-top:2%;margin-bottom:2%" value="Download Summary"/>
+
+		<script>
+            function download(file, text) {
+              
+                //creating an invisible element
+                var element = document.createElement('a');
+                element.setAttribute('href', 'data:text/plain;charset=utf-8, '+ encodeURIComponent(text));
+                element.setAttribute('download', file);
+              
+                // Above code is equivalent to
+                // <a href="path of file" download="file name">
+              
+                document.body.appendChild(element);
+              
+                //onClick property
+                element.click();
+              
+                document.body.removeChild(element);
+            }
+              
+            // Start file download.
+            document.getElementById("downloadButton")
+            .addEventListener("click", function() {
+                // Generate download of hello.txt 
+                // file with some content
+                var text = document.getElementById("outputTextBox").value;
+                var filename = "Summary.txt";
+              
+                download(filename, text);
+            }, false);
+         </script>
+
+	</body>
+</html>
