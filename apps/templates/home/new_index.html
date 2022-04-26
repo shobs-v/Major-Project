@@ -32,6 +32,26 @@
 		
 		}
 
+		/* .outputText{
+
+		width: 94%;
+		height: 250px;
+		padding: 12px 20px;
+		box-sizing: border-box;
+		border: 2px solid #1261A0;
+		border-radius: 4px;
+		background-color: #f8f8f8;
+		font-size: 16px;
+		margin-left:3%;
+		margin-right:3%;
+		margin-top:1%;
+		resize:vertical;
+		overflow-y:scroll;
+		position: relative;
+		
+		} */
+		
+
 		h2{
 			margin-top:1.5%;
 			text-align:center;
@@ -105,7 +125,6 @@
     padding: 4px 8px;
     font-size: 16px;
     line-height: 1.4;
-    min-width: 100px;
     text-align: center;
     border-radius: 6px;
 }
@@ -183,8 +202,8 @@
 				{% load static %} <img src="{% static "assets/img/logo.png" %}" width="55" height="45" />
 				MediText
 			</a>
-			<a class="navbar-brand" style="margin-left:60%;font-family: 'Secular One', sans-serif;"href="#">About MediText</a>
-			<a class="navbar-brand" style="font-family: 'Secular One', sans-serif;" href="#">Who can Use</a>
+			<a class="navbar-brand" style="margin-left:60%;font-family: 'Secular One', sans-serif;"href="{% url 'home:About_Us'%}">About MediText</a>
+			<a class="navbar-brand" style="font-family: 'Secular One', sans-serif;" href="{url home:About_Us}">Who can Use</a>
 		</nav>
 
 
@@ -216,26 +235,25 @@
 		<button type="submit" class="submitButton">Summarize Now</button>
 
 		<br><br>
-	    <p> Generated Summary: </p>
-		<textarea readonly id="outputTextBox" name="outputTextBox" placeholder="Your summary">{{output}}</textarea>
+	    <p style="z-index: 0;"> Generated Summary: </p>	
 
 	</form>
 
+	<!-- <div readonly id="outputTextBox" name="outputTextBox" class="outputText" placeholder="Your summary">
+		
+		{{ words }}
+			
+	 </div> -->
+<p name="outputTextBox" id = "outputTextBox">
+	{% for words,meanings in key.items %}
+	{% if meanings %}
+	<span data-tooltip="{{ meanings }}" data-tooltip-position="top" style="color: green;">{{ words }}</span>
+	{% else %}
+	<span >{{ words }}</span>
+	{% endif %}
+	{% endfor %}
+</p>
 		<input type="button" id="downloadButton" class="submitButton meanings" style="margin-top:2%;margin-bottom:2%" value="Download Summary"/>
-
-
-		<!-- Code for displaying summary starts -->
-		<h3>
-			{% for words,meanings in key.items %}
-			<!-- {{ words }} -->
-			{% if meanings %}
-			<span data-tooltip="{{ meanings }}" data-tooltip-position="top" style="color: green;">{{ words }}</span>
-			{% else %}
-			<span>{{ words }}</span>
-			{% endif %}
-			{% endfor %}
-		</h3>
-		<!-- Code for displaying summary ends -->
 
 
 
@@ -263,7 +281,8 @@
             .addEventListener("click", function() {
                 // Generate download of hello.txt 
                 // file with some content
-                var text = document.getElementById("outputTextBox").value;
+                var text = JSON.parse("{{text|escapejs}}");
+				text = text['summary']
                 var filename = "Summary.txt";
               
                 download(filename, text);

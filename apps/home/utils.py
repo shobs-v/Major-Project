@@ -30,7 +30,7 @@ class MedDictionary():
             response = requests.get(
             url="https://app.scrapingbee.com/api/v1/store/google",
             params={
-                "api_key": "N49DKTJ556ALVKJ7932OPCCFI6KVOPTKUJXAFCXNYQGT59AJXCD2002DB8U34RZBUVEVW3KI316NARF8",
+                "api_key": "FM7RYJ5OHZVPE1NRFFDXUTNN1N9LMYVQ6E2EJJUD87CFJHFPCJ4LWWMDVXQCWLV6BQI9WAM4OHCZ7OYK",
                 "search": word,
                 "nb_results":1
             },

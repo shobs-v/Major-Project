@@ -14,6 +14,7 @@ from django.core.files.storage import default_storage
 from numpy import disp
 import os
 from apps.home.utils import MedDictionary,TextSummarizer,MedNER
+from json import dumps
 
 from bs4 import BeautifulSoup
 import requests
@@ -21,6 +22,10 @@ import requests
 dictionary = MedDictionary()
 summarizer = TextSummarizer()
 ner = MedNER()
+
+def about_us(request):
+    return render(request,'home/trial.html')
+
 
 def new_index(request):
     input_text = ""
@@ -49,7 +54,8 @@ def new_index(request):
     summary = str(summarizer.summarize(input_text))
     ents = ner.ents(summary)
     key = meaning_dict(summary,ents)
-    final_display_summary = {'key':key}
+    final_display_summary = {'key':key,'summary':summary}
+    final_display_summary.update({'text':dumps(final_display_summary)})
 
     return render(request,'home/new_index.html',final_display_summary)
 
